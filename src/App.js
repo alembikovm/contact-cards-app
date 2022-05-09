@@ -1,58 +1,67 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  findCurrentContact,
+  getContacts,
+  selectContacts,
+} from "./store/contactsSlice";
+import Modal from "./components/Modal/Modal";
+import ContactForm from "./forms/ContactForm";
+import { modalState, setIsOpen } from "./store/modalSlice";
+
+import "./scss/main.scss";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+  const dispatch = useDispatch();
+  const { contacts, status } = useSelector(selectContacts);
+  const { isOpen } = useSelector(modalState);
+
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
+  const handleDoubleClick = useCallback(
+    (contactId) => {
+      dispatch(findCurrentContact(contactId));
+      dispatch(setIsOpen(true));
+    },
+    [dispatch]
   );
+
+  const handleCloseModal = () => dispatch(setIsOpen(false));
+
+  if (status === "idle") {
+    return (
+      <div className="App">
+        <ul className="cards">
+          {contacts.map((contact) => (
+            <li
+              key={contact.id}
+              className="cards_item"
+              onDoubleClick={() => handleDoubleClick(contact.id)}
+            >
+              <div className="card_content">
+                <div className="card_title">{contact.name}</div>
+                <div className="card_text">{contact.email}</div>
+                <div className="card_text">{contact.address?.city}</div>
+                <div className="card_text">{contact.phone}</div>
+                <div className="card_text">{contact.website}</div>
+                <div className="card_text">{contact.company?.name}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <h3 className="made_by">Made with ♡</h3>
+
+        <Modal handleClose={handleCloseModal} isOpen={isOpen}>
+          <ContactForm />
+        </Modal>
+      </div>
+    );
+  }
+
+  return "loading...";
 }
 
 export default App;

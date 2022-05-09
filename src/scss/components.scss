@@ -1,0 +1,182 @@
+html {
+    background-color: $bg-color;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.card {
+    background-color: $white-color;
+    border-radius: $border-radius;
+    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card_content {
+    width: 100%;
+    padding: 1rem;
+    background: $bg-gradient;
+    cursor: pointer;
+}
+
+.cards_item {
+    display: flex;
+    padding: 1rem;
+}
+
+.card_title {
+    color: $white-color;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    margin: 0px;
+}
+
+.card_text {
+    color: $white-color;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+}
+
+.made_by {
+    font-weight: 400;
+    font-size: 0.6rem;
+    margin-top: 35px;
+    text-align: center;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: $shadow-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    z-index: 999;
+    padding: 10rem 5rem 5rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.4);
+}
+
+.modal-content {
+    background-color: $white-color;
+    color: $font-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close-btn {
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 1rem;
+    font-family: $font-family;
+    background-color: $bg-color;
+    color: $font-color;
+    border-color: $white-color;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: $font-color;
+    }
+}
+
+.modal-enter-done {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.modal-exit {
+    opacity: 0;
+    transform: scale(0.4);
+}
+
+.contact-form-field {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 1.3rem;
+
+    label {
+        margin-right: 10px;
+    }
+}
+
+.contact-form-title {
+    text-align: center;
+}
+
+.update-contact-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 1rem 0;
+    font-family: $font-family;
+    line-height: normal;
+    cursor: pointer;
+    border-color: $bg-color;
+    color: $font-color;
+    background-color: $bg-color;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.1428571429em;
+
+    &:hover {
+        color: $font-color;
+        background-color: $bg-color;
+    }
+}
+
+@media (min-width: 10rem) {
+    .cards_item {
+        width: 100%;
+    }
+
+    .modal {
+        padding: 0;
+    }
+
+    .modal-content {
+        width: 100%;
+    }
+
+    .modal-close-btn {
+        width: 100%;
+    }
+}
+
+@media (min-width: 40rem) {
+    .cards_item {
+        width: 50%;
+    }
+}
+
+@media (min-width: 56rem) {
+    .cards_item {
+        width: 33.3333%;
+    }
+
+    .modal-content {
+        width: 70%;
+        height: 70%;
+    }
+
+    .modal-close-btn {
+        width: 70%;
+    }
+}
